@@ -1,4 +1,4 @@
-module test/booking-system
+module github.com/alex-necsoiu/booking-system
 
 go 1.17
 

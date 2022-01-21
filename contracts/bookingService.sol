@@ -5,20 +5,20 @@ pragma solidity ^0.8.0;
 
 contract BookRoom {
 
-
     struct Room {
         uint256 id;
         string name;
         address owner;
+        uint256 capacity;
         // TimeSlot[12] timeslot;
     }
-    struct TimeSlot {
-        uint256 roomId;
-        address renter;
-        string checkIn;
-        string checkOut;
-        bool available;
-    }
+    // struct TimeSlot {
+    //     uint256 roomId; // room ID + renter addres + checkIn + checkOut
+    //     address renter;
+    //     string checkIn;
+    //     string checkOut;
+    //     bool booked;
+    // }
 
     // mapping acts as a associative array of key => value , here key is unsigned
     // int and value is structure
@@ -45,7 +45,8 @@ contract BookRoom {
         rooms.push(Room({
             id:_id,
             name:_name,
-            owner:_owner
+            owner:_owner,
+            capacity:18 
             }));
         return true;
     }
@@ -63,7 +64,6 @@ contract BookRoom {
     //         room.renter=renter;
     //         room.checkIn=checkIn;
     //         room.checkOut= checkOut;
-
     //     return true;
     // }
 
