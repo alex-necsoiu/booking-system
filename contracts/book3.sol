@@ -17,20 +17,19 @@ contract BookRoom {
 
     // Amount is send to owners address , owner will auto set to the deployed one
     address owner;
-    // mapping (uint256 => Room[])public rooms;
-   Room[] public rooms;
+    mapping (uint256 => Room[])public rooms;
     // Constructor called when contract is deployed or migrated
     constructor(){
         // Set the contract creater as the owner
         owner = msg.sender;
         for (uint256 i = 1; i < 5; i++) {
-            createRoom(string(abi.encodePacked("room",Strings.toString(i))), owner);
+            createRoom(1514764800,string(abi.encodePacked("room",Strings.toString(i))), owner);
             roomsCount++;
         }
     }
 
-    function createRoom( string memory _name,address _owner) public {
-            rooms.push(
+    function createRoom(uint256 _date, string memory _name,address _owner) public {
+            rooms[_date].push(
             Room({
                 id:hashId(_owner),
                 name:_name, 
@@ -41,14 +40,14 @@ contract BookRoom {
         roomsCount++;
     }
 
-    function allRoomsByDate()public view returns(Room  [] memory){
-        return rooms;
+    function allRoomsByDate(uint256 _date)public view returns(Room  [] memory){
+        return rooms[_date];
     }
-    function getRoom(uint idx) public view returns (string memory name, uint256 id) {
-        return (rooms[idx].name, rooms[idx].id);
+    function getRoom(uint256 _date,uint idx) public view returns (string memory name, uint256 id) {
+        return (rooms[_date][idx].name, rooms[_date][idx].id);
     }
-    function getRoomCount()     public view returns(uint) {
-        return rooms.length;
+    function getRoomCount(uint256 _date)     public view returns(uint) {
+        return rooms[_date].length;
     }
     function hashId(address _owner) internal pure returns(uint256){ 
         return uint256(keccak256(abi.encodePacked(_owner)));
