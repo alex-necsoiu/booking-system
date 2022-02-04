@@ -33,3 +33,25 @@ func ethClient() (*ethclient.Client, error) {
 
 	return client, nil
 }
+
+// var (
+// 	// Dial is an alias for github.com/ethereum/go-ethereum/ethclient.Dial
+// 	Dial = ethclient.Dial
+// )
+
+// // Client is go-ethereum.ethclient re-exported.
+// type Client = ethclient.Client
+
+// // MustDial calls Dial with an URL and returns an ethereum client.
+// // On error, the error is logged an the software exits with fatal error message.
+// func MustDial(url string) *ethclient.Client {
+// 	client, err := ethclient.Dial(url)
+// 	if err != nil {
+// 		log.Fatal(
+// 			"Ethereum client", errors.Wrap(err, "Unable to connect to node"),
+// 			"provider", "blockchain",
+// 			"chain", "ethereum",
+// 		)
+// 	}
+// 	return client
+// }

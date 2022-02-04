@@ -92,29 +92,28 @@ func TxOpts(ctx context.Context, client *ethclient.Client, privateKey *ecdsa.Pri
 
 	nonce, err := client.PendingNonceAt(context.Background(), add)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	gasPrice, err := client.SuggestGasPrice(context.Background())
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
-	// chainID, err := client.NetworkID(context.Background())
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
+	chainID, err := client.NetworkID(context.Background())
+	if err != nil {
+		return nil, err
+	}
 
-	auth := bind.NewKeyedTransactor(privateKey)
+	auth, err := bind.NewKeyedTransactorWithChainID(privateKey, chainID)
+	if err != nil {
+		return nil, err
+	}
+	// auth := bind.NewKeyedTransactor(privateKey)
 	auth.Nonce = big.NewInt(int64(nonce))
 	auth.Value = big.NewInt(0)     // in wei
 	auth.GasLimit = uint64(300000) // in units
 	auth.GasPrice = gasPrice
-
-	// auth, err := bind.NewKeyedTransactorWithChainID(privateKey, chainID)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
 
 	// auth.GasPrice = gasPrice
 	// auth.GasLimit = uint64(6000000)
